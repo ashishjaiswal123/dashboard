@@ -1,15 +1,34 @@
 import React, { useState } from 'react'
 import './Sidebar.css'
 import Logo from '../../imgs/logo.png'
-
+import {motion} from 'framer-motion'
 import { SidebarData } from '../../Data/Data'
-import { UilSignOutAlt } from '@iconscout/react-unicons'
+import { UilSignOutAlt, UilBars } from '@iconscout/react-unicons'
 
 const Sidebar = () => {
 
     const [selected, setSelected] = useState(0)
+    const [expanded, setExpanded] = useState(false)
+
+    const sidebarvariants = {
+        true:{
+            left: '0'
+        },
+        false:{
+            left: '-60%'
+        }
+    }
+
   return (
-    <div className="sidebar">
+    <>
+    <div className='bars' style={expanded ? {left: '60%'}: {left: '5%'}}
+    onClick={()=>setExpanded(!expanded)}>
+         <UilBars/>
+    </div>
+    <motion.div className="sidebar"
+    variants={sidebarvariants}
+    animate={window.innerWidth<=768?`${expanded}`:''}
+    >
         {/* logo */}
         <div className="logo">
             <img src={Logo} alt="" />
@@ -35,7 +54,8 @@ const Sidebar = () => {
                 <UilSignOutAlt/>
             </div>
         </div>
-    </div>
+    </motion.div>
+    </>
   )
 }
 
